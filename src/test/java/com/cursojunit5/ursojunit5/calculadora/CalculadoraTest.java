@@ -37,6 +37,12 @@ public class CalculadoraTest {
 		
 	}
 	
+	@Test
+	public void deveRetornarNumeroInteiroNaDivisao() {
+		Calculadora calc = new Calculadora();
+		float resultado = calc.dividir(6, 2);
+		Assertions.assertEquals(3, resultado);
+	}
 	
 	
 }
