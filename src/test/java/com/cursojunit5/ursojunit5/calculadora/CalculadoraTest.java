@@ -3,25 +3,49 @@ package com.cursojunit5.ursojunit5.calculadora;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.cursojunit5.cursojunit5.Calculadora;
 
 public class CalculadoraTest {
 
-	private ArithmeticException assertThrows;
+	Calculadora calc;
+	
+	@BeforeEach
+	public void setup() {
+		System.out.println("---- Before Each ----");
+		calc = new Calculadora();
+	}
+	
+	@BeforeAll
+	public static void setupAll() {
+		System.out.println("---- Before All ----");
+	}
+	
+	@AfterEach
+	public void setupdown() {
+		System.out.println("---- After Each ----");
+		calc = new Calculadora();
+	}
+	
+	@AfterAll
+	public static void setupdownAll() {
+		System.out.println("---- After All ----");
+	}
 
 	@Test
 	public void testSomar() {
-		Calculadora calc = new Calculadora();
 		Assertions.assertTrue(calc.soma(2, 3) == 5);
 		Assertions.assertEquals(calc.soma(2, 3), 5);
 	}
 	
 	@Test
 	public void deveRetornarNumeroInteiroNaDivisao() {
-		Calculadora calc = new Calculadora();
 		float resultado = calc.dividir(6, 2);
 		Assertions.assertEquals(3, resultado);
 	}
@@ -48,7 +72,7 @@ public class CalculadoraTest {
 
 	@Test
 	public void deveLancarExcecaoQuandoDividirPorZero() {
-		assertThrows = Assertions.assertThrows(ArithmeticException.class, () -> {
+		ArithmeticException assertThrows = Assertions.assertThrows(ArithmeticException.class, () -> {
 			float resultado = 10 / 0;
 		});
 		Assertions.assertEquals("/ by zero", assertThrows.getMessage());
