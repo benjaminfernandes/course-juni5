@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import com.cursojunit5.cursojunit5.barriga.domain.builders.UsuarioBuilder;
@@ -71,6 +72,38 @@ public class UsuarioTest {
 			"1, Nome usuário, user@mail.com, NULL, Senha obrigatório"
 	}, nullValues = "NULL")
 	public void deveValidarCamposObrigatorios(int id, String nome, String email, String senha, String mensagem) {
+		ValidationException ex = Assertions.assertThrows(ValidationException.class, () -> {
+			UsuarioBuilder.umUsuario()
+				.comId(id)
+				.comNome(nome)
+				.comEmail(email)
+				.comSenha(senha)
+			.agora();
+		});
+		assertEquals(mensagem, ex.getMessage());
+	}
+	
+	@DisplayName("Deve validar campos obrigatórios")
+	@ParameterizedTest(name = "[{index}] - {4}")
+	@CsvFileSource(files = "src\\test\\resources\\camposObrigatoriosUsuario.csv", 
+	nullValues = "NULL", useHeadersInDisplayName = true)
+	public void deveValidarCamposObrigatorios2(int id, String nome, String email, String senha, String mensagem) {
+		ValidationException ex = Assertions.assertThrows(ValidationException.class, () -> {
+			UsuarioBuilder.umUsuario()
+				.comId(id)
+				.comNome(nome)
+				.comEmail(email)
+				.comSenha(senha)
+			.agora();
+		});
+		assertEquals(mensagem, ex.getMessage());
+	}
+	
+	@DisplayName("Deve validar campos obrigatórios")
+	@ParameterizedTest(name = "[{index}] - {4}")
+	@CsvFileSource(files = "src\\test\\resources\\camposObrigatoriosUsuario.csv", 
+	nullValues = "NULL", numLinesToSkip = 1)
+	public void deveValidarCamposObrigatorios3(int id, String nome, String email, String senha, String mensagem) {
 		ValidationException ex = Assertions.assertThrows(ValidationException.class, () -> {
 			UsuarioBuilder.umUsuario()
 				.comId(id)

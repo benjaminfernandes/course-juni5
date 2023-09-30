@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import com.cursojunit5.cursojunit5.barriga.domain.Conta;
 import com.cursojunit5.cursojunit5.barriga.domain.Usuario;
 
 /**
@@ -139,6 +140,6 @@ public class BuilderMaster {
 
 	public static void main(String[] args) {
 		BuilderMaster master = new BuilderMaster();
-		master.gerarCodigoClasse(Usuario.class);
+		master.gerarCodigoClasse(Conta.class);//Coloque a classe aqui
 	}
 }
