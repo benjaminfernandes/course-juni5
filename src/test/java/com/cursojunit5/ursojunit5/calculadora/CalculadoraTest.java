@@ -1,5 +1,8 @@
 package com.cursojunit5.ursojunit5.calculadora;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +12,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import com.cursojunit5.cursojunit5.Calculadora;
 
@@ -77,5 +83,26 @@ public class CalculadoraTest {
 		});
 		Assertions.assertEquals("/ by zero", assertThrows.getMessage());
 	}
+	
+	
+	@ParameterizedTest
+	@ValueSource(strings = {"Teste1", "Teste2"})
+	public void testStrings(String param) {
+		System.out.println(param);
+		assertNotNull(param);
+	}
+	
+	@ParameterizedTest
+	@CsvSource(value = {
+			"6, 2, 3",
+			"6, -2, -3",
+			"10 , 5, 2",
+			"0, 2, 0"
+	})
+	public void deveDividirCorretamente(int num, int den, int res) {
+		float resultado = calc.dividir(num, den);
+		assertEquals(res, resultado);
+	}
+	
 
 }
