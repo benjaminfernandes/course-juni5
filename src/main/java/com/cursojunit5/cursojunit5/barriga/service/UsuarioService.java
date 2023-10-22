@@ -1,5 +1,7 @@
 package com.cursojunit5.cursojunit5.barriga.service;
 
+import java.util.Optional;
+
 import com.cursojunit5.cursojunit5.barriga.domain.Usuario;
 import com.cursojunit5.cursojunit5.barriga.domain.exceptions.ValidationException;
 import com.cursojunit5.cursojunit5.barriga.service.repositories.UsuarioRepository;
@@ -17,6 +19,10 @@ public class UsuarioService {
 			throw new ValidationException(String.format("Usuário %s já cadastrado!", usuario.email()));
 		});
 		return this.usuarioRepo.salvar(usuario);
+	}
+	
+	public Optional<Usuario> getUserByEmail(String email) {
+		return this.usuarioRepo.getUserByEmail(email);
 	}
 	
 }
