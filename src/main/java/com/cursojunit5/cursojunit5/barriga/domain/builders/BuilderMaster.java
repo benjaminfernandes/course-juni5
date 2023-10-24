@@ -14,7 +14,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.cursojunit5.cursojunit5.barriga.domain.Conta;
-import com.cursojunit5.cursojunit5.barriga.domain.Usuario;
 
 /**
  * Classe responsável pela criação de builders de entidades

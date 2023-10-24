@@ -2,9 +2,7 @@ package com.cursojunit5.ursojunit5.barriga.servico;
 
 import java.util.Optional;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -14,6 +12,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.cursojunit5.cursojunit5.barriga.domain.Usuario;
 import com.cursojunit5.cursojunit5.barriga.domain.builders.UsuarioBuilder;
+import com.cursojunit5.cursojunit5.barriga.domain.exceptions.ValidationException;
 import com.cursojunit5.cursojunit5.barriga.service.UsuarioService;
 import com.cursojunit5.cursojunit5.barriga.service.repositories.UsuarioRepository;
 
@@ -79,6 +78,17 @@ public class UsuarioServiceTest {
 		
 		Mockito.verify(repository).getUserByEmail(usuerToSave.email());
 		Mockito.verify(repository).salvar(usuerToSave);
+	}
+
+	@Test
+	public void deveRejeitarUsuarioExistente() {
+		Usuario userToSave = UsuarioBuilder.umUsuario().comId(null).agora();
+		Mockito.when(repository.getUserByEmail(userToSave.email()))
+			.thenReturn(Optional.of(UsuarioBuilder.umUsuario().agora()));
+		ValidationException ex = Assertions.assertThrows(ValidationException.class, () -> service.salvar(userToSave));
+		Assertions.assertTrue(ex.getMessage().endsWith("já cadastrado!"));
+
+		Mockito.verify(repository, Mockito.never()).salvar(userToSave);
 	}
 
 }
