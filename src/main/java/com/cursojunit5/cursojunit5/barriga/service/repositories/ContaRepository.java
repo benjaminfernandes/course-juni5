@@ -7,4 +7,5 @@ import com.cursojunit5.cursojunit5.barriga.domain.Conta;
 public interface ContaRepository {
     Conta salvar(Conta conta);
     List<Conta> obterContasPorUsuario(Integer usuarioId);
+    void delete(Conta conta);
 }
