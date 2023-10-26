@@ -27,6 +27,8 @@ public class ContaServiceTest {
     @Mock private ContaRepository contaRepository;
     @Mock private ContaEvent event;
 
+    //Existe a anotação do mockito @Captor que serve para quando não temos controle, porém nos importamos com o valor. Casos de valores randômicos gerados pela aplicação.
+
     @Test
     public void deveSalvarComSucesso() throws Exception{
         Conta contaToSave = umaConta().comId(null).agora();
@@ -80,6 +82,7 @@ public class ContaServiceTest {
 
         Mockito.verify(contaRepository).delete(contaSalva);
     }
+
 
 
 }
